@@ -5,6 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chemical Identifier</title>
     <link rel="stylesheet" href="styles.css">
+    <script type="module">
+        // Import Firebase SDK via CDN
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
+        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js";
+
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCvgLnMtXYXQ9TOGk0j4WC31bAOsRCNwPk",
+            authDomain: "chemical-identifier.firebaseapp.com",
+            projectId: "chemical-identifier",
+            storageBucket: "chemical-identifier.appspot.com",
+            messagingSenderId: "778237393691",
+            appId: "1:778237393691:web:3f587588808f5a229c31be"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Make Firestore accessible globally
+        window.db = db;
+    </script>
 </head>
 <body>
     <h1>🔬 Chemical Identifier</h1>
@@ -15,25 +37,3 @@
     <script src="script.js"></script>
 </body>
 </html>
-<script type="module">
-  // Import Firebase SDK via CDN
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
-  import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js";
-
-  // Firebase Configuration
-  const firebaseConfig = {
-    apiKey: "AIzaSyCvgLnMtXYXQ9TOGk0j4WC31bAOsRCNwPk",
-    authDomain: "chemical-identifier.firebaseapp.com",
-    projectId: "chemical-identifier",
-    storageBucket: "chemical-identifier.appspot.com",  // FIXED
-    messagingSenderId: "778237393691",
-    appId: "1:778237393691:web:3f587588808f5a229c31be"
-  };
-
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-
-  // Make Firestore accessible globally
-  window.db = db;
-</script>
