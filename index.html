@@ -16,8 +16,24 @@
 </body>
 </html>
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-  import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+  // Import Firebase SDK via CDN
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
+  import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js";
 
-  console.log("🔥 Firebase scripts loaded");
+  // Firebase Configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyCvgLnMtXYXQ9TOGk0j4WC31bAOsRCNwPk",
+    authDomain: "chemical-identifier.firebaseapp.com",
+    projectId: "chemical-identifier",
+    storageBucket: "chemical-identifier.appspot.com",  // FIXED
+    messagingSenderId: "778237393691",
+    appId: "1:778237393691:web:3f587588808f5a229c31be"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  // Make Firestore accessible globally
+  window.db = db;
 </script>
