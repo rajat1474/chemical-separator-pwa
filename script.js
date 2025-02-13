@@ -1,38 +1,35 @@
-// ✅ Use Firebase 11.3.1 to match index.html
+// Import Firebase modules (Ensure versions match index.html)
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
 import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js";
 
-// ✅ Use global `db` from index.html instead of reinitializing Firebase
-const db = window.db;
-
-// ✅ Debug: Check if Firebase is actually working
-if (!db) {
-    console.error("❌ Firebase failed to initialize!");
+// Check if Firebase is initialized
+if (!window.db) {
+    console.error("❌ Firebase Firestore not initialized!");
 } else {
-    console.log("🔥 Firestore Loaded:", db);
+    console.log("✅ Firebase Firestore initialized successfully.");
 }
 
-// ✅ Function to search for a chemical in Firestore
+const db = window.db; // Use the globally accessible Firestore instance
+
 async function searchChemical() {     
-    console.log("🔍 Searching for chemical...");
+    console.log("🔍 Searching for chemical..."); 
+    let query = document.getElementById("search").value.trim().toLowerCase();     
+    let resultDiv = document.getElementById("result");      
 
-    let query = document.getElementById("search").value.trim().toLowerCase();
-    let resultDiv = document.getElementById("result");
-
-    console.log("User searched for:", query);
+    console.log("User searched for:", query); 
 
     try {         
         const chemicalsRef = collection(db, "chemicals");         
-        const querySnapshot = await getDocs(chemicalsRef);
+        const querySnapshot = await getDocs(chemicalsRef);          
 
         let found = false;         
         querySnapshot.forEach((doc) => {             
             let chem = doc.data();             
-            console.log("Checking chemical:", chem.name);
+            console.log("Checking chemical:", chem.name); 
 
             if (chem.name.toLowerCase() === query) {                 
                 found = true;                 
-                console.log("✅ Found:", chem.name);
+                console.log("✅ Found:", chem.name);                  
 
                 resultDiv.innerHTML = `                     
                     <h2>${chem.name}</h2>                     
@@ -42,17 +39,16 @@ async function searchChemical() {
                     <img src="${chem.imageUrl}" width="200" alt="${chem.name}">                 
                 `;             
             }         
-        });
+        });          
 
         if (!found) {             
-            console.log("⚠ Chemical not found!");
+            console.log("⚠ Chemical not found!");             
             resultDiv.innerHTML = "<p>⚠ Chemical not found!</p>";         
         }     
     } catch (error) {         
-        console.error("🔥 Firestore Error:", error);
+        console.error("🔥 Firestore Error:", error);         
         resultDiv.innerHTML = `<p>🔥 Error: ${error.message}</p>`;     
     }
 }
 
-// ✅ Debug: Show script is loaded
 console.log("🚀 Script loaded successfully!");
