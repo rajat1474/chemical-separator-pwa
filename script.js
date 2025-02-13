@@ -18,28 +18,42 @@ const db = getFirestore(app);
 
 // Function to search for a chemical in Firestore
 async function searchChemical() {
+    console.log("🔍 Searching for chemical..."); // STEP 1: Debugging starts
+
     let query = document.getElementById("search").value.trim().toLowerCase();
     let resultDiv = document.getElementById("result");
 
-    const chemicalsRef = collection(db, "chemicals");
-    const querySnapshot = await getDocs(chemicalsRef);
+    console.log("User searched for:", query); // STEP 2: Checking input
 
-    let found = false;
-    querySnapshot.forEach((doc) => {
-        let chem = doc.data();
-        if (chem.name.toLowerCase() === query) {
-            found = true;
-            resultDiv.innerHTML = `
-                <h2>${chem.name}</h2>
-                <p><strong>Formula:</strong> ${chem.formula}</p>
-                <p><strong>Description:</strong> ${chem.description}</p>
-                <p><strong>Separation Steps:</strong> ${chem.separationSteps}</p>
-                <img src="${chem.imageUrl}" width="200" alt="${chem.name}">
-            `;
+    try {
+        const chemicalsRef = collection(db, "chemicals");
+        const querySnapshot = await getDocs(chemicalsRef);
+
+        let found = false;
+        querySnapshot.forEach((doc) => {
+            let chem = doc.data();
+            console.log("Checking chemical:", chem.name); // STEP 3: Checking Firebase data
+
+            if (chem.name.toLowerCase() === query) {
+                found = true;
+                console.log("✅ Found:", chem.name);
+
+                resultDiv.innerHTML = `
+                    <h2>${chem.name}</h2>
+                    <p><strong>Formula:</strong> ${chem.formula}</p>
+                    <p><strong>Description:</strong> ${chem.description}</p>
+                    <p><strong>Separation Steps:</strong> ${chem.separationSteps}</p>
+                    <img src="${chem.imageUrl}" width="200" alt="${chem.name}">
+                `;
+            }
+        });
+
+        if (!found) {
+            console.log("⚠ Chemical not found!");
+            resultDiv.innerHTML = "<p>⚠ Chemical not found!</p>";
         }
-    });
-
-    if (!found) {
-        resultDiv.innerHTML = "<p>⚠ Chemical not found!</p>";
+    } catch (error) {
+        console.error("🔥 Firestore Error:", error);
+        resultDiv.innerHTML = `<p>🔥 Error: ${error.message}</p>`;
     }
-                            }
+}
