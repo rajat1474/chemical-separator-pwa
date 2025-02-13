@@ -57,3 +57,11 @@ async function searchChemical() {
         resultDiv.innerHTML = `<p>🔥 Error: ${error.message}</p>`;     
     }
                     }
+console.log("🚀 Script loaded successfully!");
+
+// Check if Firebase is initializing
+if (typeof firebase !== "undefined") {
+    console.log("✅ Firebase loaded");
+} else {
+    console.error("❌ Firebase not loaded!");
+                        }
