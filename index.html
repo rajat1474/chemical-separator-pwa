@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chemical Identifier</title>
     <link rel="stylesheet" href="styles.css">
+
     <script type="module">
         // Import Firebase SDK via CDN
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
@@ -26,6 +27,15 @@
 
         // Make Firestore accessible globally
         window.db = db;
+
+        // Ensure script.js loads only after Firebase is ready
+        window.addEventListener("DOMContentLoaded", () => {
+            console.log("✅ Firebase initialized, loading script.js");
+            const script = document.createElement("script");
+            script.src = "script.js";
+            script.type = "module";
+            document.body.appendChild(script);
+        });
     </script>
 </head>
 <body>
@@ -33,7 +43,5 @@
     <input type="text" id="search" placeholder="Enter chemical name...">
     <button onclick="searchChemical()">Search</button>
     <div id="result"></div>
-    
-    <script src="script.js"></script>
 </body>
 </html>
